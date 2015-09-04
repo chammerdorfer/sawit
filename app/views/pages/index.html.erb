@@ -3,6 +3,7 @@
 <ul>
 	<% @links.each do |link| %>
 		<li><%= link_to link.title, link.url %></li>
+		<%= link_to 'comments', link %>
 	<%end%>
 	<%= will_paginate @links %>
 </ul>
