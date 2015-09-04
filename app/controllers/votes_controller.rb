@@ -11,6 +11,8 @@ class VotesController < ApplicationController
 
 	def create
 		@vote = current_user.votes.create(vote_params)
+		puts "===================="
+		puts @vote.errors.inspect
 		redirect_to :back
 	end
 
