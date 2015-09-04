@@ -1,11 +1,19 @@
-<h2> I AMA Homepage</h2>
+<p>a better place than reddit to see the best links on the web</p>
 <%= link_to "Add a link", new_link_path %>
 <ul>
 	<% @links.each do |link| %>
 		<li><%= link_to link.title, link.url %></li>
 		<%= link_to 'comments', link %>
+		<% if current_user && current_user.votes.where(:link_id => link.id, :up => true).present? %>
+			*
+			<% else %>
 		<%= link_to '+', votes_path(:vote => {:link_id => link.id, :up => true}), :method => :post %>
+		<% end %>
+		<% if current_user && current_user.votes.where(:link_id => link.id, :up => false).present? %>
+			*
+			<% else %>
 		<%= link_to '-', votes_path(:vote => {:link_id => link.id, :up => false}), :method => :post %>
+		<% end %>
 		Up Votes: <%= link.votes.where(:up => true).count %>
 		Down Votes: <%= link.votes.where(:up => false).count %>
 		Score: <%= link.votes.where(:up => true).count - link.votes.where(:up => false).count %>

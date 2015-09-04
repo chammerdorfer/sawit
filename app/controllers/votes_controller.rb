@@ -10,9 +10,9 @@ class VotesController < ApplicationController
 	end
 
 	def create
-		@vote = current_user.votes.create(vote_params)
-		puts "===================="
-		puts @vote.errors.inspect
+		@vote = current_user.votes.where(:link_id => params[:vote][:link_id]).first
+		@vote ||= current_user.votes.create(vote_params)
+		@vote.update_attributes(:up => params[:vote] [:up])
 		redirect_to :back
 	end
 
