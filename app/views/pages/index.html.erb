@@ -4,6 +4,11 @@
 	<% @links.each do |link| %>
 		<li><%= link_to link.title, link.url %></li>
 		<%= link_to 'comments', link %>
+		<%= link_to '+', votes_path(:vote => {:link_id => link.id, :up => true}), :method => :post %>
+		<%= link_to '-', votes_path(:vote => {:link_id => link.id, :up => false}), :method => :post %>
+		Up Votes: <%= link.votes.where(:up => true).count %>
+		Down Votes: <%= link.votes.where(:up => false).count %>
+		Score: <%= link.votes.where(:up => true).count - link.votes.where(:up => false).count %>
 	<%end%>
 	<%= will_paginate @links %>
 </ul>
